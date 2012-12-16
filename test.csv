@@ -1,0 +1,8 @@
+1 one,two,three,four
+"2 quoted fun","""hello world""", muh!,"
+  Bagels
+    and Eggs
+  Whee"
+3 empty fields,,,
+4,,,
+5 1,2,3,4
