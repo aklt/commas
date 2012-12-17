@@ -5,9 +5,9 @@ CFLAGS=-Wall -pedantic -O2
 .SUFFIXES: %.s
 .PRECIOUS: %.c
 
-all: csv.png csv.s test
+all: sexpress.png sexpress.s test
 
-test: test.o csv.o
+test: test.o sexpress.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 %.png: %.dot
@@ -26,4 +26,4 @@ test: test.o csv.o
 	ragel $(RAGEL_OPTS) $<
 
 clean:
-	@rm -fv csv.{c,s,o,png} test test.o
+	@rm -fv sexpress.{c,s,o,png} test test.o

@@ -5,9 +5,14 @@
 #include <getopt.h>
 
 #include "csv.h"
+#include "sexpress.h"
+
+#define NEW  sexpress_new
+#define FREE sexpress_free
+#define SCAN sexpress_scan
 
 static void print_field(char *data) {
-    fprintf(stderr, "%s ", data);
+    fprintf(stderr, "'%s'", data);
 }
 
 static void print_record_end(void) {
@@ -22,7 +27,7 @@ int main(int argc, char **argv) {
     size_t argChunkSize = 1;
 	size_t haveRead;
 
-	csv_t *c1 = csv_new(1, print_field, print_record_end);
+	sexpress_t *c1 = NEW(1, print_field, print_record_end);
 
     while ((opt = getopt(argc, argv, "s:i:h")) != -1) {
 
@@ -54,9 +59,9 @@ int main(int argc, char **argv) {
     while ((haveRead = fread(buffer, 1, argChunkSize, argInput)) > 0) {
         buffer[haveRead] = '\0';
         /*fprintf(stderr, "Read %d %s\n", haveRead, buffer);*/
-        csv_scan(c1, buffer, haveRead);
+        SCAN(c1, buffer, haveRead);
     }
-	csv_free(c1);
+	FREE(c1);
 	return 0;
 }
 /* $Id$ */
