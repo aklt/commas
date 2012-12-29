@@ -5,7 +5,7 @@ CFLAGS=-Wall -pedantic -O2
 .SUFFIXES: %.s
 .PRECIOUS: %.c
 
-all: test-csv test-sexpress csv.png sexpress.png
+all: csv.png sexpress.png test-csv test-sexpress
 
 test-%: test.c %.o
 	$(CC) -DMACHINE=$* $(CFLAGS) -o $@ $^
@@ -26,4 +26,4 @@ test-%: test.c %.o
 	ragel $(RAGEL_OPTS) $<
 
 clean:
-	@rm -fv {csv,sexpress}.{c,s,o,png} test-* test.o
+	@rm -fv {csv,sexpress}.{c,s,o,png} test-csv test-sexpress
