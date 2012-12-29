@@ -6,7 +6,7 @@
     size_t new_size = 2 * offsetp;                        \
     sexpress->buffer = (char *)realloc(sexpress->buffer, new_size); \
     sexpress->p = sexpress->buffer + offsetp;                       \
-	sexpress->pe = sexpress->buffer + new_size;                     \
+    sexpress->pe = sexpress->buffer + new_size;                     \
 }
 
 %%{
@@ -68,7 +68,8 @@ sexpress := C2;
 %%write data;
 
 sexpress_t* sexpress_new(size_t buffer_size, void (*field)(char *data),
-                                   void (*record_end)(void)) {
+                                   void (*record_end)(void),
+                                   void (*error)(char const *message)) {
     sexpress_t *sexpress = (sexpress_t*) malloc(sizeof(sexpress_t));
     sexpress->stack  = (int *) malloc(20);
     sexpress->stacke = sexpress->stack + 20;
@@ -77,6 +78,7 @@ sexpress_t* sexpress_new(size_t buffer_size, void (*field)(char *data),
     sexpress->pe = sexpress->buffer + buffer_size;
     sexpress->field = field;
     sexpress->record_end = record_end;
+    sexpress->error = error;
     sexpress->type = 0;
     %%write init;
     return sexpress;

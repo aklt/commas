@@ -28,15 +28,19 @@ static void print_record_end(void) {
     fprintf(stderr, "\n");
 }
 
+static void print_error(char const *message) {
+    fprintf(stderr, "%s\n", message);
+}
+
 int main(int argc, char **argv) {
     int opt;
     char buffer[1024];
     char inputFilename[256] = "-\0";
     FILE *argInput = stdin;
     size_t argChunkSize = 1;
-	size_t haveRead;
+    size_t haveRead;
 
-	STRUCT_T *c1 = NEW(1, print_field, print_record_end);
+    STRUCT_T *c1 = NEW(1, print_field, print_record_end, print_error);
 
     while ((opt = getopt(argc, argv, "s:i:h")) != -1) {
 
@@ -70,7 +74,7 @@ int main(int argc, char **argv) {
         /*fprintf(stderr, "Read %d %s\n", haveRead, buffer);*/
         SCAN(c1, buffer, haveRead);
     }
-	FREE(c1);
-	return 0;
+    FREE(c1);
+    return 0;
 }
 /* $Id$ */
