@@ -26,9 +26,9 @@
   action getq   { *csv->p++ = '"'; ALLOC; }
   action error  {
       if (csv->errbuf == 0) {
-          csv->errbuf = (char *) malloc(512);
+          csv->errbuf = (char *) malloc(80);
       }
-      snprintf(csv->errbuf, 512, "ERROR on line %d column %d", csv->line,
+      snprintf(csv->errbuf, 80, "ERROR on line %d column %d", csv->line,
                                                                csv->column);
       csv->error(csv->errbuf);
   }
@@ -79,7 +79,7 @@ void csv_free(csv_t *csv) {
 int csv_scan(csv_t *csv, char const *data, size_t len) {
     char const *p = data;
     char const *pe = data + len;
-    char const eof = pe;
+    char const *eof = pe;
     %%write exec;
     return 0;
 }
