@@ -7,9 +7,18 @@
 #include "csv.h"
 #include "sexpress.h"
 
-#define NEW  sexpress_new
-#define FREE sexpress_free
-#define SCAN sexpress_scan
+#ifndef MACHINE
+#  error "Macro MACHINE must be defined"
+#else
+#  define MAKER(x, y) x ## _ ## y
+#  define EVAL(x, y) MAKER(x, y)
+#  define NAME(fun) EVAL(MACHINE,fun)
+
+#  define NEW  NAME(new)
+#  define FREE NAME(free)
+#  define SCAN NAME(scan)
+#  define STRUCT_T NAME(t)
+#endif
 
 static void print_field(char *data) {
     fprintf(stderr, "'%s'", data);
@@ -27,7 +36,7 @@ int main(int argc, char **argv) {
     size_t argChunkSize = 1;
 	size_t haveRead;
 
-	sexpress_t *c1 = NEW(1, print_field, print_record_end);
+	STRUCT_T *c1 = NEW(1, print_field, print_record_end);
 
     while ((opt = getopt(argc, argv, "s:i:h")) != -1) {
 
