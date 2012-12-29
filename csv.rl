@@ -6,7 +6,7 @@
     size_t new_size = 2 * offsetp;                        \
     csv->buffer = (char *)realloc(csv->buffer, new_size); \
     csv->p = csv->buffer + offsetp;                       \
-	csv->pe = csv->buffer + new_size;                     \
+    csv->pe = csv->buffer + new_size;                     \
 }
 
 %%{
@@ -16,8 +16,8 @@
 
   action token {
       *csv->p = '\0';
-	  csv->field(csv->buffer);
-	  csv->p = csv->buffer;
+      csv->field(csv->buffer);
+      csv->p = csv->buffer;
   }
 
   action get    { *csv->p++ = *p; ALLOC; }
